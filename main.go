@@ -19,5 +19,5 @@ func main() {
 		)
 	})
 
-	router.Run()
+	router.Run("localhost:8082")
 }
