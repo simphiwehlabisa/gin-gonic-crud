@@ -34,5 +34,7 @@ func main() {
 	router.PATCH("/books/:id", controllers.UpdateBook)
 	router.DELETE("/books/:id", controllers.DeleteBook)
 
-	router.Run("localhost:8082")
+	// router.Run("localhost:8082")
+	router.Run()
+
 }
