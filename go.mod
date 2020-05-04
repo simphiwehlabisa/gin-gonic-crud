@@ -1,4 +1,4 @@
-module bookstore
+module go-crud-api
 
 go 1.14
 
