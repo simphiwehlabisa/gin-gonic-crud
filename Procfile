@@ -1,1 +1,1 @@
-web: bin/bookstore
+web: bin/go-crud-api
