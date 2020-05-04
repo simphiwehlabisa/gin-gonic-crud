@@ -1,4 +1,4 @@
-module go-crud-api
+module github.com/simphiwehlabisa/go-crud-api
 
 go 1.14
 
