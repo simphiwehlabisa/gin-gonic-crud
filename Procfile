@@ -1,1 +1,1 @@
-web: bin/go-crud-api
+web: bin/github.com/simphiwehlabisa/go-crud-api
