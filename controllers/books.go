@@ -8,10 +8,53 @@ import (
 	"github.com/simphiwehlabisa/go-crud-api/models"
 )
 
+// FindBook controller
+func FindBook(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	//get model if exists
+	var book models.Book
+	if err := db.Where("id = ? ", c.Param("id")).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record Nod Found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": book})
+}
+
 // CreateBookInput Schema
 type CreateBookInput struct {
 	Title  string `json:"title" binding:"required"`
 	Author string `json:"author" binding:"required"`
+}
+
+// UpdateBookInput Schema
+type UpdateBookInput struct {
+	Title  string `json:"title"`
+	Author string `json:"author"`
+}
+
+// UpdateBook
+func UpdateBook(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	//check if model exists
+	var book models.Book
+	if err := db.Where("id = ? ", c.Param("id")).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found"})
+		return
+	}
+
+	//validate input
+	var input UpdateBookInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db.Model(&book).Update(input)
+
+	c.JSON(http.StatusOK, gin.H{"data": book})
 }
 
 // CreateBook controller

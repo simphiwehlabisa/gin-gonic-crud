@@ -30,6 +30,8 @@ func main() {
 
 	router.GET("/books", controllers.FindBooks)
 	router.POST("/books", controllers.CreateBook)
+	router.GET("/books/:id", controllers.FindBook)
+	router.PATCH("/books/:id", controllers.UpdateBook)
 
 	router.Run("localhost:8082")
 }
