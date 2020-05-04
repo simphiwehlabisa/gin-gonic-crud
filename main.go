@@ -1,13 +1,28 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 
 	"github.com/simphiwehlabisa/go-crud-api/controllers"
 	"github.com/simphiwehlabisa/go-crud-api/models"
 )
+
+func goDotEnvVariable(key string) string {
+
+	// load .env file
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
+}
 
 func main() {
 	router := gin.Default()
@@ -28,13 +43,23 @@ func main() {
 		)
 	})
 
-	router.GET("/books", controllers.FindBooks)
-	router.POST("/books", controllers.CreateBook)
-	router.GET("/books/:id", controllers.FindBook)
-	router.PATCH("/books/:id", controllers.UpdateBook)
-	router.DELETE("/books/:id", controllers.DeleteBook)
+	//api routes
+	api := router.Group("/api")
+	api.GET("/books", controllers.FindBooks)
+	api.POST("/books", controllers.CreateBook)
+	api.GET("/books/:id", controllers.FindBook)
+	api.PATCH("/books/:id", controllers.UpdateBook)
+	api.DELETE("/books/:id", controllers.DeleteBook)
 
-	// router.Run("localhost:8082")
-	router.Run()
+	dotenv := goDotEnvVariable("APP_ENV")
+
+	if dotenv == "local" {
+		router.Run("localhost:8082")
+	} else {
+		router.Run()
+
+	}
+
+	// router.Run()
 
 }
