@@ -29,6 +29,7 @@ func main() {
 	})
 
 	router.GET("/books", controllers.FindBooks)
+	router.POST("/books", controllers.CreateBook)
 
 	router.Run("localhost:8082")
 }
