@@ -2,9 +2,10 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/sqlite" //sqlite
 )
 
+// SetupModels function
 func SetupModels() *gorm.DB {
 	db, err := gorm.Open("sqlite3", "test.db")
 
